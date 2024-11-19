@@ -1,6 +1,6 @@
 import prisma from '../../../lib/prisma';
-import { getServerSession } from 'next-auth';
-import { authOptions } from "../auth/[...nextauth]";
+// import { getServerSession } from 'next-auth';
+// import { authOptions } from "../auth/[...nextauth]";
 import { MOCK_EMAIL } from '../../../helpers/constants';
 
 export default async function handle(req, res) {
