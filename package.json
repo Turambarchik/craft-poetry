@@ -3,12 +3,13 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "dev": "next",
-    "build": "next build",
-    "start": "next start",
-    "push_db": "npx prisma db push",
-    "update_prisma": "npx prisma generate",
-    "open_db": "npx prisma studio"
+	"postinstall": "prisma generate",
+	"dev": "next",
+	"build": "next build",
+	"start": "next start",
+	"push_db": "npx prisma db push",
+	"update_prisma": "npx prisma generate",
+	"open_db": "npx prisma studio"
   },
   "keywords": [],
   "author": "",
