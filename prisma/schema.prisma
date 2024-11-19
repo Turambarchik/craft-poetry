@@ -12,9 +12,10 @@ datasource db {
 
 model Form {
   id        String     @default(cuid()) @id
-  title     String
   type		String
+  title     String?
   content   String?
+  draft     Boolean @default(true)
   published Boolean @default(false)
   author    User?   @relation(fields: [authorId], references: [id])
   authorId  String?

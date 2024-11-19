@@ -7,29 +7,23 @@ const Header: React.FC = () => {
   const isActive: (pathname: string) => boolean = (pathname) =>
     router.pathname === pathname;
 
-  let left = (
-    <div className="left">
-      <Link href="/">
-        <a className="bold" data-active={isActive("/")}>
-          Feed
-        </a>
-      </Link>
-    </div>
-  );
-
-  let right = null;
-
   return (
-    <nav>
-      {left}
-      {right}
-      <style jsx>{`
-        nav {
-          display: flex;
-          padding: 2rem;
-          align-items: center;
-        }
-      `}</style>
+    <nav style={{ display: "flex", justifyContent: 'space-between'}}>
+		<Link href="/">
+				<a className="bold" data-active={isActive("/")}>
+					Library
+				</a>
+			</Link>
+			<Link href="/table">
+				<a className="bold" data-active={isActive("/table")}>
+					Table
+				</a>
+			</Link>
+			<Link href="/drafts">
+				<a className="bold" data-active={isActive("/drafts")}>
+					Drafts
+				</a>
+			</Link>
     </nav>
   );
 };

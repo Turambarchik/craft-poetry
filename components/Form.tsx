@@ -15,7 +15,7 @@ export type FormProps = {
 const Form: React.FC<{ form: FormProps }> = ({ form }) => {
   const authorName = form.author ? form.author.name : "Unknown author";
   return (
-    <div onClick={() => Router.push("/p/[id]", `/p/${form.id}`)}>
+    <div onClick={() => Router.push("/form/[id]", `/form/${form.id}`)}>
       <h2>{form.title}</h2>
       <small>By {authorName}</small>
     </div>
