@@ -1,50 +1,75 @@
-import React, { useState } from 'react';
-import Router from 'next/router';
-import Layout from '../../components/Layout';
-import { MOCK_EMAIL } from '../../helpers/constants';
+import React, { useState } from "react";
+import Router from "next/router";
+import Layout from "../../components/Layout";
+import { MOCK_EMAIL } from "../../helpers/constants";
+import { Button, TextField, Container, Box, Typography } from "@mui/material";
 
 const Table: React.FC = () => {
-  const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
 
   const submitData = async (e: React.SyntheticEvent) => {
-	e.preventDefault();
-	try {
-	  const body = { title, content, type: "haiku" ,email: MOCK_EMAIL };
-	  await fetch('/api/form', {
-		method: 'POST',
-		headers: { 'Content-Type': 'application/json' },
-		body: JSON.stringify(body),
-	  });
-	  await Router.push('/drafts');
-	} catch (error) {
-	  console.error(error);
-	}
+    e.preventDefault();
+    const body = { title, content, type: "haiku", email: MOCK_EMAIL };
+    try {
+      await fetch("/api/form", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+      await Router.push("/drafts");
+    } catch (error) {
+      console.error(error);
+    }
   };
-  
 
   return (
     <Layout>
-      <div>
-        <form onSubmit={submitData}>
-          <h1>Table</h1>
-		  <input
-            autoFocus
-            onChange={(e) => setTitle(e.target.value)}
-            placeholder="Title"
-            type="text"
+      <Container maxWidth='sm' sx={{ py: 4 }}>
+        <Typography variant='h4' component='h1' gutterBottom>
+          Write Your Poem
+        </Typography>
+        <Box
+          component='form'
+          onSubmit={submitData}
+          sx={{ display: "flex", flexDirection: "column", gap: 3 }}
+        >
+          <TextField
+            label='Title'
+            variant='outlined'
             value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            autoFocus
+            fullWidth
+            placeholder="Enter your poem's title"
           />
-          <textarea
-            cols={50}
-            onChange={(e) => setContent(e.target.value)}
-            placeholder="Content"
-            rows={8}
+          <TextField
+            label='Content'
+            variant='outlined'
             value={content}
+            onChange={(e) => setContent(e.target.value)}
+            multiline
+            rows={6}
+            fullWidth
+            placeholder='Write your poem here...'
           />
-          <input disabled={!content || !title} type="submit" value="Create" />
-        </form>
-      </div>
+          <Button
+            variant='contained'
+            color='primary'
+            type='submit'
+            disabled={!title || !content}
+            sx={{
+              backgroundColor: "#3f51b5",
+              "&:disabled": {
+                backgroundColor: "#d3d3d3",
+                color: "#ffffff",
+              },
+            }}
+          >
+            Create
+          </Button>
+        </Box>
+      </Container>
     </Layout>
   );
 };

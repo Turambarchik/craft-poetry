@@ -1,30 +1,42 @@
 import React from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { AppBar, Toolbar, Button, Box } from "@mui/material";
 
 const Header: React.FC = () => {
   const router = useRouter();
-  const isActive: (pathname: string) => boolean = (pathname) =>
-    router.pathname === pathname;
 
   return (
-    <nav style={{ display: "flex", justifyContent: 'space-between'}}>
-		<Link href="/">
-				<a className="bold" data-active={isActive("/")}>
-					Library
-				</a>
-			</Link>
-			<Link href="/table">
-				<a className="bold" data-active={isActive("/table")}>
-					Table
-				</a>
-			</Link>
-			<Link href="/drafts">
-				<a className="bold" data-active={isActive("/drafts")}>
-					Drafts
-				</a>
-			</Link>
-    </nav>
+    <AppBar position='static' color='primary'>
+      <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
+        <Box sx={{ display: "flex", gap: 2 }}>
+          {["/", "/table", "/drafts"].map((path) => (
+            <Button
+              key={path}
+              component={Link}
+              href={path}
+              color='inherit'
+              sx={{
+                ...(router.pathname === path
+                  ? {
+                      backgroundColor: "rgba(255, 255, 255, 0.2)",
+                      color: "#ffffff",
+                      borderRadius: "8px",
+                    }
+                  : {}),
+                "&:hover": {
+                  backgroundColor: "rgba(255, 255, 255, 0.1)",
+                },
+              }}
+            >
+              {path === "/"
+                ? "Library"
+                : path.slice(1).charAt(0).toUpperCase() + path.slice(2)}
+            </Button>
+          ))}
+        </Box>
+      </Toolbar>
+    </AppBar>
   );
 };
 

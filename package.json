@@ -3,25 +3,30 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-	"postinstall": "prisma generate",
-	"dev": "next",
-	"build": "next build",
-	"start": "next start",
-	"push_db": "npx prisma db push",
-	"update_prisma": "npx prisma generate",
-	"open_db": "npx prisma studio"
+    "postinstall": "prisma generate",
+    "dev": "next",
+    "build": "next build",
+    "start": "next start",
+    "push_db": "npx prisma db push",
+    "update_prisma": "npx prisma generate",
+    "open_db": "npx prisma studio"
   },
   "keywords": [],
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "@emotion/cache": "^11.13.5",
+    "@emotion/react": "^11.13.5",
+    "@emotion/server": "^11.11.0",
+    "@emotion/styled": "^11.13.5",
+    "@fontsource/roboto": "^5.1.0",
+    "@mui/icons-material": "^6.1.8",
+    "@mui/material": "^6.1.8",
+    "@mui/material-nextjs": "^6.1.8",
     "@prisma/client": "^5.22.0",
     "next": "^15.0.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
-  },
-  "engines": {
-    "node": "18.x"
   },
   "devDependencies": {
     "@types/node": "17.0.14",
