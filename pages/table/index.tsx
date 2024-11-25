@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import { Box, Button, Container, TextField, Typography } from "@mui/material";
 import Router from "next/router";
+import React, { useState } from "react";
+
 import Layout from "../../components/Layout";
 import { MOCK_EMAIL } from "../../helpers/constants";
-import { Button, TextField, Container, Box, Typography } from "@mui/material";
 
 const Table: React.FC = () => {
   const [title, setTitle] = useState("");
@@ -25,18 +26,18 @@ const Table: React.FC = () => {
 
   return (
     <Layout>
-      <Container maxWidth='sm' sx={{ py: 4 }}>
-        <Typography variant='h4' component='h1' gutterBottom>
+      <Container maxWidth="sm" sx={{ py: 4 }}>
+        <Typography variant="h4" component="h1" gutterBottom>
           Write Your Poem
         </Typography>
         <Box
-          component='form'
+          component="form"
           onSubmit={submitData}
           sx={{ display: "flex", flexDirection: "column", gap: 3 }}
         >
           <TextField
-            label='Title'
-            variant='outlined'
+            label="Title"
+            variant="outlined"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             autoFocus
@@ -44,19 +45,19 @@ const Table: React.FC = () => {
             placeholder="Enter your poem's title"
           />
           <TextField
-            label='Content'
-            variant='outlined'
+            label="Content"
+            variant="outlined"
             value={content}
             onChange={(e) => setContent(e.target.value)}
             multiline
             rows={6}
             fullWidth
-            placeholder='Write your poem here...'
+            placeholder="Write your poem here..."
           />
           <Button
-            variant='contained'
-            color='primary'
-            type='submit'
+            variant="contained"
+            color="primary"
+            type="submit"
             disabled={!title || !content}
             sx={{
               backgroundColor: "#3f51b5",

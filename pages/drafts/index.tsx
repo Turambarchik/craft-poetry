@@ -1,6 +1,7 @@
 import { Box, Container, Paper, Typography } from "@mui/material";
 import { GetServerSideProps } from "next";
 import React from "react";
+
 import Form, { FormProps } from "../../components/Form";
 import Layout from "../../components/Layout";
 import prisma from "../../lib/prisma";
@@ -30,18 +31,19 @@ type Props = {
 
 const Drafts: React.FC<Props> = ({ drafts }) => (
   <Layout>
-    <Container maxWidth='lg' sx={{ py: 4 }}>
-      <Typography variant='h4' component='h1' gutterBottom>
+    <Container maxWidth="lg" sx={{ py: 4 }}>
+      <Typography variant="h4" component="h1" gutterBottom>
         My Drafts
       </Typography>
       {drafts.length > 0 ? (
         <Box
-          component='main'
+          component="main"
           sx={{ display: "flex", flexDirection: "column", gap: 2, mt: 2 }}
         >
           {drafts.map((form) => (
             <Paper
               elevation={3}
+              key={form.id}
               sx={{
                 p: 2,
                 mb: 3,
@@ -59,7 +61,7 @@ const Drafts: React.FC<Props> = ({ drafts }) => (
           ))}
         </Box>
       ) : (
-        <Typography variant='body1' color='text.secondary'>
+        <Typography variant="body1" color="text.secondary">
           No drafts available.
         </Typography>
       )}

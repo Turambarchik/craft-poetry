@@ -1,17 +1,18 @@
 import { Box, Container } from "@mui/material";
-import Header from "./Header";
 import React, { ReactNode } from "react";
+
+import Header from "./Header";
 
 type Props = { children: ReactNode };
 
 const Layout: React.FC<Props> = ({ children }) => (
   <Box sx={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
     <Header />
-    <Container component='main' maxWidth='lg' sx={{ flexGrow: 1, py: 4 }}>
+    <Container component="main" maxWidth="lg" sx={{ flexGrow: 1, py: 4 }}>
       {children}
     </Container>
     <Box
-      component='footer'
+      component="footer"
       sx={{
         py: 2,
         textAlign: "center",

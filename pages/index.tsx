@@ -1,9 +1,10 @@
-import React from "react";
+import { Box, Container, Paper, Typography } from "@mui/material";
 import { GetStaticProps } from "next";
-import Layout from "../components/Layout";
+import React from "react";
+
 import Form, { FormProps } from "../components/Form";
+import Layout from "../components/Layout";
 import prisma from "../lib/prisma";
-import { Container, Typography, Box, Paper } from "@mui/material";
 
 export const getStaticProps: GetStaticProps = async () => {
   const libraryContent = await prisma.form.findMany({
@@ -29,12 +30,12 @@ type Props = {
 
 const Library: React.FC<Props> = ({ libraryContent }) => (
   <Layout>
-    <Container maxWidth='lg' sx={{ py: 4 }}>
-      <Typography variant='h4' component='h1' gutterBottom>
+    <Container maxWidth="lg" sx={{ py: 4 }}>
+      <Typography variant="h4" component="h1" gutterBottom>
         Public Library
       </Typography>
       <Box
-        component='main'
+        component="main"
         sx={{
           display: "flex",
           flexDirection: "column",

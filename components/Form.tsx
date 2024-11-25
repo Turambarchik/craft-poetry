@@ -1,12 +1,6 @@
-import React from "react";
+import { Card, CardActionArea, CardContent, Typography } from "@mui/material";
 import Router from "next/router";
-import {
-  Box,
-  Typography,
-  Card,
-  CardActionArea,
-  CardContent,
-} from "@mui/material";
+import React from "react";
 
 export type FormProps = {
   id: string;
@@ -39,10 +33,10 @@ const Form: React.FC<{ form: FormProps }> = ({ form }) => {
     >
       <CardActionArea onClick={handleClick}>
         <CardContent>
-          <Typography variant='h5' component='h2' gutterBottom>
+          <Typography variant="h5" component="h2" gutterBottom>
             {form.title}
           </Typography>
-          <Typography variant='body2' color='textSecondary'>
+          <Typography variant="body2" color="textSecondary">
             By {authorName}
           </Typography>
         </CardContent>

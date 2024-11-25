@@ -1,13 +1,13 @@
-import React from "react";
+import { AppBar, Box, Button, Toolbar } from "@mui/material";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { AppBar, Toolbar, Button, Box } from "@mui/material";
+import React from "react";
 
 const Header: React.FC = () => {
   const router = useRouter();
 
   return (
-    <AppBar position='static' color='primary'>
+    <AppBar position="static" color="primary">
       <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
         <Box sx={{ display: "flex", gap: 2 }}>
           {["/", "/table", "/drafts"].map((path) => (
@@ -15,7 +15,7 @@ const Header: React.FC = () => {
               key={path}
               component={Link}
               href={path}
-              color='inherit'
+              color="inherit"
               sx={{
                 ...(router.pathname === path
                   ? {

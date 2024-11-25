@@ -1,0 +1,23 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+echo '🏗️👷 Running lint-staged and building your project before committing'
+
+# Run lint-staged for Prettier and ESLint on staged files
+npx lint-staged ||
+(
+    echo '❌ lint-staged failed. Please fix the issues listed above, add changes, and try committing again.';
+    false;
+)
+
+# If lint-staged passes, try to create a production build
+echo '👷🔨 Creating production build...'
+
+npm run build ||
+(
+    echo '❌ Build failed. Fix build errors and try committing again.';
+    false;
+)
+
+# If everything passes... We can commit
+echo '✅ All checks passed! Proceeding with the commit.'
