@@ -11,6 +11,8 @@
     "open_db": "npx prisma studio",
     "push_db": "npx prisma db push",
     "update_prisma": "npx prisma generate",
+    "clean": "rm -rf node_modules .next package-lock.json && npm cache clean --force",
+    "check:all": "npm install --strict-peer-deps",
     "lint:all": "npx lint-staged",
     "test-all": "npm ci && npm run build",
     "format": "prettier --write .",
@@ -38,7 +40,8 @@
   "devDependencies": {
     "@types/node": "17.0.14",
     "@types/react": "17.0.38",
-    "@typescript-eslint/eslint-plugin": "^8.15.0",
+    "@typescript-eslint/eslint-plugin": "8.16.0",
+    "@typescript-eslint/parser": "8.16.0",
     "autoprefixer": "^10.0.1",
     "eslint": "^8.57.0",
     "eslint-config-next": "14.1.4",
