@@ -4,7 +4,8 @@
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
-    "strict": false,
+    "strict": true,
+    "noImplicitAny": false,
     "forceConsistentCasingInFileNames": true,
     "noEmit": true,
     "esModuleInterop": true,
@@ -13,9 +14,44 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
-    "incremental": true
+    "incremental": true,
+    "types": [
+      "node"
+    ],
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/components/*": [
+        "components/*"
+      ],
+      "@/helpers/*": [
+        "helpers/*"
+      ],
+      "@/context/*": [
+        "context/*"
+      ],
+      "@/pages/*": [
+        "pages/*"
+      ],
+      "@/prisma/*": [
+        "prisma/*"
+      ],
+      "@/lib/*": [
+        "lib/*"
+      ],
+      "@/poetry-validation/*": [
+        "poetry-validation/*"
+      ],
+      "@/theme/*": [
+        "theme/*"
+      ]
+    }
   },
-  "exclude": ["node_modules"],
+  "exclude": [
+    "node_modules",
+    "**/*.test.ts",
+    "**/*.test.tsx"
+  ],
   "include": [
     "global.d.ts",
     "next-env.d.ts",
@@ -23,6 +59,7 @@
     "**/*.ts",
     "**/*.tsx",
     "lint-staged.config.js",
-    ".next/types/**/*.ts"
+    ".next/types/**/*.ts",
+    "./src/**/*.ts"
   ]
 }

@@ -2,9 +2,9 @@ import { Box, Container, Paper, Typography } from "@mui/material";
 import { GetServerSideProps } from "next";
 import React from "react";
 
-import Form, { FormProps } from "../../components/Form";
-import Layout from "../../components/Layout";
-import prisma from "../../lib/prisma";
+import Form, { FormProps } from "@/components/Form";
+import Layout from "@/components/Layout";
+import prisma from "@/lib/prisma";
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   const drafts = await prisma.form.findMany({

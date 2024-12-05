@@ -10,6 +10,13 @@ npx lint-staged ||
     false;
 )
 
+# Run lint-staged for Prettier and ESLint on staged files
+npm run lint:types ||
+(
+    echo '❌ lint-types failed. Please fix the issues listed above, add changes, and try committing again.';
+    false;
+)
+
 # If lint-staged passes, try to create a production build
 echo '👷🔨 Creating production build...'
 

@@ -1,7 +1,7 @@
 // import { getServerSession } from 'next-auth';
 // import { authOptions } from "../auth/[...nextauth]";
-import { MOCK_EMAIL } from "../../../helpers/constants";
-import prisma from "../../../lib/prisma";
+import { MOCK_EMAIL } from "@/helpers/constants";
+import prisma from "@/lib/prisma";
 
 export default async function handle(req, res) {
   if (req.method !== "POST") {

@@ -4,3 +4,4 @@ node_modules/
 .env
 .vercel
 .vscode/
+tsconfig.tsbuildinfo

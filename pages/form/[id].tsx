@@ -2,39 +2,60 @@ import { Box, Container, Paper, Typography } from "@mui/material";
 import { GetServerSideProps } from "next";
 import React from "react";
 
-import { FormProps } from "../../components/Form";
-import Layout from "../../components/Layout";
-import { MOCK_EMAIL } from "../../helpers/constants";
+import { FormProps } from "@/components/Form";
+import Layout from "@/components/Layout";
+import prisma from "@/lib/prisma";
 
-export const getServerSideProps: GetServerSideProps = async () => {
-  const form = {
-    id: "1",
-    title: "First Sonet",
-    content: "Sonet content",
-    published: false,
-    author: { name: "Oleh", email: MOCK_EMAIL },
+export const getServerSideProps: GetServerSideProps = async ({ params }) => {
+  const form = await prisma.form.findUnique({
+    where: {
+      id: String(params?.id),
+    },
+    include: {
+      author: {
+        select: { name: true },
+      },
+    },
+  });
+
+  if (!form) {
+    return {
+      notFound: true,
+    };
+  }
+
+  return {
+    props: { ...form },
   };
-  return { props: form };
 };
 
-const FormPage: React.FC<FormProps> = (props) => (
-  <Layout>
-    <Container maxWidth="sm" sx={{ py: 4 }}>
-      <Paper elevation={3} sx={{ p: 4 }}>
-        <Typography variant="h4" component="h1" gutterBottom>
-          {props.published ? props.title : `${props.title} (Draft)`}
-        </Typography>
-        <Typography variant="subtitle1" color="text.secondary">
-          By {props.author?.name || "Unknown author"}
-        </Typography>
-        <Box sx={{ mt: 3 }}>
-          <Typography variant="body1" color="text.primary">
-            {props.content}
+const FormPage: React.FC<FormProps> = (props) => {
+  return (
+    <Layout>
+      <Container maxWidth="sm" sx={{ py: 4 }}>
+        <Paper elevation={3} sx={{ p: 4 }}>
+          <Typography variant="h4" component="h1" gutterBottom>
+            {props.published ? props.title : `${props.title} (Draft)`}
           </Typography>
-        </Box>
-      </Paper>
-    </Container>
-  </Layout>
-);
+          <Typography variant="subtitle1" color="text.secondary">
+            By {props.author?.name || "Unknown author"}
+          </Typography>
+          <Box sx={{ mt: 3 }}>
+            <Typography
+              variant="body1"
+              color="text.primary"
+              sx={{
+                whiteSpace: "pre-wrap",
+                wordWrap: "break-word",
+              }}
+            >
+              {props.content}
+            </Typography>
+          </Box>
+        </Paper>
+      </Container>
+    </Layout>
+  );
+};
 
 export default FormPage;

@@ -26,20 +26,6 @@ module.exports = {
         "react/react-in-jsx-scope": "off",
         "@typescript-eslint/no-shadow": ["off"],
         "@typescript-eslint/no-unused-vars": "off",
-        // [
-        //   "error",
-        //   /**
-        //    * See: https://typescript-eslint.io/rules/no-unused-vars/#options
-        //    */
-        //   {
-        //     args: "after-used",
-        //     argsIgnorePattern: "^_",
-        //     caughtErrors: "none", // Codebase is riddled with unused caught errors.
-        //     destructuredArrayIgnorePattern: "^_",
-        //     varsIgnorePattern: "^_",
-        //     ignoreRestSiblings: true,
-        //   },
-        // ],
         "@typescript-eslint/no-empty-interface": "off",
         quotes: ["error", "double"],
         "simple-import-sort/imports": [
@@ -50,6 +36,16 @@ module.exports = {
         ],
         "simple-import-sort/exports": "error",
         "react/jsx-curly-brace-presence": ["error", { props: "never" }],
+        "no-restricted-imports": [
+          "error",
+          {
+            paths: [],
+            patterns: [
+              "**/poetry-validation/*", // This module is encapsulated
+              "!**/poetry-validation/index", // Enable only index export
+            ],
+          },
+        ],
       },
     },
   ],

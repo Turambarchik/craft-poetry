@@ -11,9 +11,8 @@ import {
   Main,
   NextScript,
 } from "next/document";
-import * as React from "react";
 
-import theme, { roboto } from "../theme/theme";
+import theme, { roboto } from "@/theme/theme";
 
 export default function MyDocument(
   props: DocumentProps & DocumentHeadTagsProps,
