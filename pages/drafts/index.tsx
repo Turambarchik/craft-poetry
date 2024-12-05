@@ -1,22 +1,23 @@
-import React from 'react';
-import { GetServerSideProps } from 'next';
-// import { useSession, getSession } from 'next-auth/react';
-import Layout from '../../components/Layout';
-import prisma from '../../lib/prisma';
-import Form, { FormProps } from '../../components/Form';
+import { Box, Container, Paper, Typography } from "@mui/material";
+import { GetServerSideProps } from "next";
+import React from "react";
+
+import Form, { FormProps } from "@/components/Form";
+import Layout from "@/components/Layout";
+import prisma from "@/lib/prisma";
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
-//   const session = await getSession({ req });
-//   if (!session) {
-//     res.statusCode = 403;
-//     return { props: { drafts: [] } };
-//   }
+  //   const session = await getSession({ req });
+  //   if (!session) {
+  //     res.statusCode = 403;
+  //     return { props: { drafts: [] } };
+  //   }
 
   const drafts = await prisma.form.findMany({
     where: {
-	//TODO After Auth integration
-    //author: { email: session.user.email },
-	  draft: true,
+      //TODO After Auth integration
+      //author: { email: session.user.email },
+      draft: true,
       published: false,
     },
     include: {
@@ -35,16 +36,16 @@ type Props = {
 };
 
 const Drafts: React.FC<Props> = (props) => {
-//   const { data: session } = useSession();
+  //   const { data: session } = useSession();
 
-//   if (!session) {
-//     return (
-//       <Layout>
-//         <h1>My Drafts</h1>
-//         <div>You need to be authenticated to view this page.</div>
-//       </Layout>
-//     );
-//   }
+  //   if (!session) {
+  //     return (
+  //       <Layout>
+  //         <h1>My Drafts</h1>
+  //         <div>You need to be authenticated to view this page.</div>
+  //       </Layout>
+  //     );
+  //   }
 
   return (
     <Layout>

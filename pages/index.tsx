@@ -1,13 +1,16 @@
-import React from "react"
-import { GetStaticProps } from "next"
-import Layout from "../components/Layout"
-import Form, { FormProps } from "../components/Form"
-import prisma from "../lib/prisma"
+import { Box, Container, Paper, Typography } from "@mui/material";
+import Layout from "components/Layout";
+import { GetStaticProps } from "next";
+import React from "react";
+
+import Form, { FormProps } from "@/components/Form";
+
+import prisma from "../lib/prisma";
 
 export const getStaticProps: GetStaticProps = async () => {
   const libraryContent = await prisma.form.findMany({
     where: {
-	  draft: false,
+      draft: false,
       published: true,
     },
     include: {
@@ -16,15 +19,15 @@ export const getStaticProps: GetStaticProps = async () => {
       },
     },
   });
-  return { 
-    props: { libraryContent }, 
-    revalidate: 10 
-  }
-}
+  return {
+    props: { libraryContent },
+    revalidate: 10,
+  };
+};
 
 type Props = {
-  libraryContent: FormProps[]
-}
+  libraryContent: FormProps[];
+};
 
 const Library: React.FC<Props> = (props) => {
   return (
@@ -40,7 +43,7 @@ const Library: React.FC<Props> = (props) => {
         </main>
       </div>
     </Layout>
-  )
-}
+  );
+};
 
-export default Library
+export default Library;

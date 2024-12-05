@@ -1,5 +1,12 @@
-import React from "react";
+import {
+  Box,
+  Card,
+  CardActionArea,
+  CardContent,
+  Typography,
+} from "@mui/material";
 import Router from "next/router";
+import React from "react";
 
 export type FormProps = {
   id: string;
@@ -8,6 +15,7 @@ export type FormProps = {
     name: string;
     email: string;
   } | null;
+  handleClick: () => void;
   content: string;
   published: boolean;
 };
@@ -15,10 +23,49 @@ export type FormProps = {
 const Form: React.FC<{ form: FormProps }> = ({ form }) => {
   const authorName = form.author ? form.author.name : "Unknown author";
   return (
-    <div onClick={() => Router.push("/form/[id]", `/form/${form.id}`)}>
-      <h2>{form.title}</h2>
-      <small>By {authorName}</small>
-    </div>
+    <Card
+      elevation={3}
+      sx={{
+        marginBottom: 2,
+        cursor: "pointer",
+        "&:hover": {
+          boxShadow: 6,
+        },
+      }}
+    >
+      <CardActionArea onClick={form.handleClick}>
+        <CardContent>
+          <Typography variant="h5" component="h2" gutterBottom>
+            {form.title}
+          </Typography>
+          <Box
+            sx={{
+              maxHeight: 300,
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+              display: "-webkit-box",
+              WebkitLineClamp: 6,
+              WebkitBoxOrient: "vertical",
+            }}
+          >
+            <Typography
+              variant="body1"
+              color="textPrimary"
+              gutterBottom
+              sx={{
+                whiteSpace: "pre-wrap",
+                wordWrap: "break-word",
+              }}
+            >
+              {form.content}
+            </Typography>
+          </Box>
+          <Typography variant="body2" color="textSecondary">
+            By {authorName}
+          </Typography>
+        </CardContent>
+      </CardActionArea>
+    </Card>
   );
 };
 
