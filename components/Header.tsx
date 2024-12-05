@@ -24,7 +24,13 @@ const Header: React.FC = () => {
 
   return (
     <AppBar position="static" color="primary">
-      <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
+      <Toolbar
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          flexWrap: "wrap",
+        }}
+      >
         <Box sx={{ display: "flex", gap: 2 }}>
           {["/", "/table", "/drafts"].map((path) => (
             <Button

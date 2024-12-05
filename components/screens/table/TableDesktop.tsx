@@ -136,7 +136,7 @@ const TableDesktop: React.FC<TableDesktopProps> = ({
             rows={8}
             fullWidth
             placeholder="Write your haiku here (3 lines, 5-7-5 syllables)..."
-            sx={{ minWidth: 400, fontSize: "1.2rem", minHeight: "200px" }}
+            sx={{ minWidth: 200, fontSize: "1.2rem", minHeight: "200px" }}
           />
           <Box sx={{ mt: 3, display: "flex", justifyContent: "flex-end" }}>
             <Button

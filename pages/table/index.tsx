@@ -26,7 +26,7 @@ const Table: React.FC = () => {
     semanticWarnings: [],
   });
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const { selectedForm } = useAppContext();
   const [warningModalOpen, setWarningModalOpen] = useState(false);
 
