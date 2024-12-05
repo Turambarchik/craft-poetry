@@ -1,1 +1,1 @@
-export const MOCK_EMAIL = "oleh.prymachenko@gmail.com"
+export const MOCK_EMAIL = "oleh.prymachenko@gmail.com";
