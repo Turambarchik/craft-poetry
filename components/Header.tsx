@@ -32,16 +32,37 @@ const Header: React.FC = () => {
   };
 
   return (
-    <AppBar position="static" color="primary" sx={{ padding: 1 }}>
+    <AppBar
+      position="static"
+      color="primary"
+      sx={{
+        padding: {
+          xs: 0.5,
+          sm: 1,
+        },
+      }}
+    >
       <Toolbar
         variant="dense"
         sx={{
+          padding: {
+            xs: 0.5,
+            sm: 1,
+          },
           display: "flex",
           justifyContent: "space-between",
           flexWrap: "wrap",
         }}
       >
-        <Box sx={{ display: "flex", gap: 2 }}>
+        <Box
+          sx={{
+            display: "flex",
+            gap: {
+              xs: 0.5,
+              sm: 2,
+            },
+          }}
+        >
           {/* "/library", */}
           {["/", "/drafts"].map((path) => (
             <Button
@@ -58,6 +79,10 @@ const Header: React.FC = () => {
                     }
                   : {}),
                 "&:hover": { backgroundColor: "rgba(255, 255, 255, 0.1)" },
+                "padding": {
+                  xs: 0.5,
+                  sm: 1,
+                },
               }}
             >
               {t(path.slice(1) || "table")}
