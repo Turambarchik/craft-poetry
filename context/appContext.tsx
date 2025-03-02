@@ -1,6 +1,5 @@
 import React, { createContext, ReactNode, useContext, useState } from "react";
-
-import { PoetryForm } from "@/helpers/constants";
+import { PoetryForm } from "utils/constants";
 
 interface AppContextProps {
   selectedForm: PoetryForm;
@@ -13,7 +12,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
   const [selectedForm, setSelectedForm] = useState<PoetryForm>(
-    PoetryForm.Haiku,
+    PoetryForm.Haiku
   );
 
   return (

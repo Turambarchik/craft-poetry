@@ -1,0 +1,8 @@
+{
+  "only_allowed_characters": "Only {{lang}} letters and standard punctuation are allowed. Found: {{characters}}",
+  "line_syllables_error": "Line {{line}} must have {{expected}} syllables. (Found {{found}})",
+  "line_too_long": "Line {{line}} is too long. Maximum {{max}} words allowed.",
+  "avoid_cliches": "Avoid clichés for a more original haiku.",
+  "lines_rhyme_error": "Lines {{line1}} and {{line2}} end with rhyming words.",
+  "line_count_error": "Expected {{expected}} lines. (Found {{found}})"
+}

@@ -3,6 +3,7 @@ import {
   Alert,
   Box,
   Button,
+  CircularProgress,
   Container,
   Dialog,
   DialogActions,
@@ -12,82 +13,91 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import { useTranslation } from "next-i18next";
 import React from "react";
 
+import AnimatedAlert from "@/components/common/animated-alert";
+
 import { useAppContext } from "../../../context/appContext";
+import { TableProps } from "../types";
 
-interface TableDesktopProps {
-  title: string;
-  content: string;
-  setTitle: React.Dispatch<React.SetStateAction<string>>;
-  setContent: (text: string) => Promise<void>;
-  technicalErrors: string[];
-  semanticErrors: string[];
-  technicalWarnings: string[];
-  semanticWarnings: string[];
-  handleSubmit: (e: React.SyntheticEvent) => void;
-  warningModalOpen: boolean;
-  setWarningModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  handleWarningConfirm: () => void;
-}
-
-const TableDesktop: React.FC<TableDesktopProps> = ({
+const TableDesktop: React.FC<TableProps> = ({
   title,
   content,
   setTitle,
   setContent,
   technicalErrors,
+  analysis,
+  formContentIsInValid,
+  handleGptAnalyze,
+  loadingAnalysis,
   semanticErrors,
   technicalWarnings,
   semanticWarnings,
-  handleSubmit,
+  handleCreate,
   warningModalOpen,
   setWarningModalOpen,
   handleWarningConfirm,
 }) => {
+  const { t } = useTranslation("table");
   const { selectedForm } = useAppContext();
 
-  console.log({ semanticWarnings });
+  const handleAnalyzeClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    handleGptAnalyze();
+  };
+
   return (
     <Container maxWidth="lg" sx={{ py: 2, position: "relative" }}>
       <Box sx={{ display: "flex", justifyContent: "center" }}>
         <Typography variant="h4" component="h1" gutterBottom>
-          {`Write your ${selectedForm}`}
+          {`${t("write_your")} ${selectedForm}`}
         </Typography>
       </Box>
       <Box sx={{ display: "flex", justifyContent: "space-between", mt: 3 }}>
         <Box sx={{ width: "200px" }}>
           <TextField
-            label="Title"
+            label={t("title_label")}
             variant="outlined"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             fullWidth
             aria-label="Haiku Title"
-            placeholder="Enter your haiku's title"
+            placeholder={t("placeholder_title") || ""}
           />
         </Box>
         <Button
           variant="contained"
           color="primary"
-          type="submit"
-          disabled
-          onClick={(e) => {}}
-          startIcon={<PsychologyIcon />}
+          type="button"
+          disabled={loadingAnalysis || !content}
+          onClick={handleAnalyzeClick}
+          startIcon={
+            loadingAnalysis ? (
+              <CircularProgress size={20} color="inherit" />
+            ) : (
+              <PsychologyIcon />
+            )
+          }
           sx={{
-            width: "120px",
-            backgroundColor: "#3f51b5",
+            "minWidth": "120px",
+            "backgroundColor": "#3f51b5",
             "&:disabled": {
               backgroundColor: "#d3d3d3",
               color: "#ffffff",
             },
           }}
         >
-          Analyze
+          {loadingAnalysis ? t("analyzing") : t("analyze")}
         </Button>
       </Box>
       <Box
-        sx={{ display: "flex", justifyContent: "space-between", gap: 2, mt: 4 }}
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          gap: 2,
+          mt: 4,
+        }}
       >
         <Box
           sx={{
@@ -99,30 +109,40 @@ const TableDesktop: React.FC<TableDesktopProps> = ({
         >
           <Box>
             <Typography variant="h6" gutterBottom>
-              Semantic Warnings
+              {t("semantic_warnings")}
             </Typography>
             {semanticWarnings.length ? (
               semanticWarnings.map((warning, index) => (
-                <Alert severity="info" key={index}>
+                <AnimatedAlert
+                  key={index}
+                  show={!!warning}
+                  severity="info"
+                  sx={{ marginTop: 4 }}
+                >
                   {warning}
-                </Alert>
+                </AnimatedAlert>
               ))
             ) : (
-              <Alert severity="success">No semantic warnings found.</Alert>
+              <Alert severity="success">{t("no_semantic_warnings")}</Alert>
             )}
           </Box>
           <Box>
             <Typography variant="h6" gutterBottom>
-              Semantic Issues
+              {t("semantic_issues")}
             </Typography>
             {semanticErrors.length > 0 ? (
               semanticErrors.map((error, index) => (
-                <Alert severity="warning" key={index}>
+                <AnimatedAlert
+                  key={index}
+                  show={!!error}
+                  severity="warning"
+                  sx={{ marginTop: 4 }}
+                >
                   {error}
-                </Alert>
+                </AnimatedAlert>
               ))
             ) : (
-              <Alert severity="success">No semantic issues found.</Alert>
+              <Alert severity="success">{t("no_semantic_issues")}</Alert>
             )}
           </Box>
         </Box>
@@ -135,35 +155,36 @@ const TableDesktop: React.FC<TableDesktopProps> = ({
             multiline
             rows={8}
             fullWidth
-            placeholder="Write your haiku here (3 lines, 5-7-5 syllables)..."
+            placeholder={t("placeholder_content") || ""}
             sx={{ minWidth: 200, fontSize: "1.2rem", minHeight: "200px" }}
           />
           <Box sx={{ mt: 3, display: "flex", justifyContent: "flex-end" }}>
             <Button
               variant="contained"
               color="primary"
-              type="submit"
-              onClick={(e) => {
-                if (
-                  technicalWarnings.length > 0 ||
-                  semanticWarnings.length > 0
-                ) {
-                  setWarningModalOpen(true);
-                  e.preventDefault();
-                } else {
-                  handleSubmit(e);
-                }
-              }}
+              type="button"
               sx={{
-                width: "120px",
-                backgroundColor: "#3f51b5",
+                "width": "120px",
+                "backgroundColor": "#3f51b5",
                 "&:disabled": {
                   backgroundColor: "#d3d3d3",
                   color: "#ffffff",
                 },
               }}
+              disabled={formContentIsInValid}
+              onClick={(e) => {
+                e.preventDefault();
+                if (
+                  technicalWarnings.length > 0 ||
+                  semanticWarnings.length > 0
+                ) {
+                  setWarningModalOpen(true);
+                } else {
+                  handleCreate();
+                }
+              }}
             >
-              Create
+              {t("create_button")}
             </Button>
           </Box>
         </Box>
@@ -175,41 +196,59 @@ const TableDesktop: React.FC<TableDesktopProps> = ({
             maxWidth: "20%",
           }}
         >
-          <Box flex={1} sx={{ minWidth: "200px" }}>
+          <Box>
             <Typography variant="h6" gutterBottom>
-              Technical Issues
+              {t("technical_issues")}
             </Typography>
             {technicalErrors.length > 0 ? (
               technicalErrors.map((error, index) => (
-                <Alert severity="error" key={index}>
+                <AnimatedAlert
+                  key={index}
+                  show={!!error}
+                  severity="error"
+                  sx={{ marginTop: 4 }}
+                >
                   {error}
-                </Alert>
+                </AnimatedAlert>
               ))
             ) : (
-              <Alert severity="success">No technical issues found.</Alert>
+              <Alert severity="success">{t("no_technical_issues")}</Alert>
             )}
           </Box>
-          <Box flex={1} sx={{ minWidth: "200px" }}>
+          <Box>
             <Typography variant="h6" gutterBottom>
-              Technical Warnings
+              {t("technical_warnings")}
             </Typography>
             {technicalWarnings.length > 0 ? (
               technicalWarnings.map((warning, index) => (
-                <Alert severity="warning" key={index}>
+                <AnimatedAlert
+                  key={index}
+                  show={!!warning}
+                  severity="warning"
+                  sx={{ marginTop: 4 }}
+                >
                   {warning}
-                </Alert>
+                </AnimatedAlert>
               ))
             ) : (
-              <Alert severity="success">No technical warnings found.</Alert>
+              <Alert severity="success">{t("no_technical_warnings")}</Alert>
             )}
           </Box>
         </Box>
       </Box>
+
+      {analysis && (
+        <Alert severity="info" sx={{ mt: 3 }}>
+          <Typography variant="h6">{t("ai_analysis")}</Typography>
+          <Typography>{analysis}</Typography>
+        </Alert>
+      )}
+
       <Dialog open={warningModalOpen}>
-        <DialogTitle>Warnings</DialogTitle>
+        <DialogTitle>{t("warnings_dialog_title")}</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Your haiku contains the following technical warnings:
+            {t("dialog_warning_text")}
             <ul>
               {technicalWarnings.map((warning, index) => (
                 <li key={index}>{warning}</li>
@@ -222,10 +261,10 @@ const TableDesktop: React.FC<TableDesktopProps> = ({
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setWarningModalOpen(false)} color="secondary">
-            Cancel
+            {t("cancel")}
           </Button>
           <Button onClick={handleWarningConfirm} color="primary">
-            Proceed
+            {t("proceed")}
           </Button>
         </DialogActions>
       </Dialog>

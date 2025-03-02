@@ -1,0 +1,8 @@
+{
+  "only_allowed_characters": "Дозволені лише {{lang}} символи та стандартна пунктуація. Знайдено: {{characters}}",
+  "line_syllables_error": "Рядок {{line}} повинен мати {{expected}} складів. (Знайдено {{found}})",
+  "line_too_long": "Рядок {{line}} занадто довгий. Максимум {{max}} слів дозволено.",
+  "avoid_cliches": "Уникайте кліше для більш оригінального хайку.",
+  "lines_rhyme_error": "Рядки {{line1}} та {{line2}} закінчуються римованими словами.",
+  "line_count_error": "Очікувалося {{expected}} рядків. (Знайдено {{found}})"
+}

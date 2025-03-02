@@ -1,3 +1,4 @@
+/** @type {import("prettier").Config} */
 module.exports = {
   tabWidth: 2,
   useTabs: false,
@@ -8,4 +9,6 @@ module.exports = {
   bracketSpacing: true,
   printWidth: 80,
   jsxSingleQuote: false,
+  singleQuote: false,
+  quoteProps: "consistent",
 };

@@ -1,7 +1,9 @@
+import PsychologyIcon from "@mui/icons-material/Psychology";
 import {
   Alert,
   Box,
   Button,
+  CircularProgress,
   Container,
   Dialog,
   DialogActions,
@@ -11,65 +13,49 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import { useTranslation } from "next-i18next";
 import React from "react";
 
+import AnimatedAlert from "@/components/common/animated-alert";
+
 import { useAppContext } from "../../../context/appContext";
+import { TableProps } from "../types";
 
-interface TableMobileProps {
-  title: string;
-  content: string;
-  setTitle: React.Dispatch<React.SetStateAction<string>>;
-  setContent: (text: string) => Promise<void>;
-  technicalErrors: string[];
-  semanticErrors: string[];
-  technicalWarnings: string[];
-  semanticWarnings: string[];
-  handleSubmit: (e: React.SyntheticEvent) => void;
-  warningModalOpen: boolean;
-  setWarningModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  handleWarningConfirm: () => void;
-}
-
-const TableMobile: React.FC<TableMobileProps> = ({
+const TableMobile: React.FC<TableProps> = ({
   title,
   content,
   setTitle,
   setContent,
   technicalErrors,
+  analysis,
+  handleGptAnalyze,
+  loadingAnalysis,
   semanticErrors,
   technicalWarnings,
   semanticWarnings,
-  handleSubmit,
+  handleCreate,
   warningModalOpen,
+  formContentIsInValid,
   setWarningModalOpen,
   handleWarningConfirm,
 }) => {
+  const { t } = useTranslation("table");
   const { selectedForm } = useAppContext();
 
   return (
     <Container maxWidth="lg" sx={{ py: 4, position: "relative" }}>
       <Typography variant="h4" component="h1" gutterBottom>
-        {`Write your ${selectedForm}`}
+        {`${t("write_your")} ${selectedForm}`}
       </Typography>
-      <Box
-        component="form"
-        onSubmit={(e) => {
-          if (technicalWarnings.length > 0 || semanticWarnings.length > 0) {
-            setWarningModalOpen(true);
-            e.preventDefault();
-          } else {
-            handleSubmit(e);
-          }
-        }}
-        sx={{ display: "flex", flexDirection: "column", gap: 3 }}
-      >
+      <Box sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
         <Box sx={{ width: "100%" }}>
           <TextField
-            label="Title"
+            label={t("title_label")}
             variant="outlined"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             fullWidth
+            placeholder={t("placeholder_title") || ""}
           />
         </Box>
         <Box sx={{ flex: "0 0 auto", minHeight: "120px" }}>
@@ -79,71 +65,143 @@ const TableMobile: React.FC<TableMobileProps> = ({
             value={content}
             onChange={(e) => setContent(e.target.value)}
             multiline
-            rows={8}
+            rows={5}
             fullWidth
+            placeholder={t("placeholder_content") || ""}
           />
         </Box>
         <Box sx={{ display: "flex", flexDirection: "column", gap: 2, mt: 3 }}>
           <Box>
-            <Typography variant="h6">Semantic Issues</Typography>
+            <Typography variant="h6">{t("semantic_issues")}</Typography>
             {semanticErrors.length > 0 ? (
               semanticErrors.map((error, index) => (
-                <Alert severity="warning" key={index}>
+                <AnimatedAlert
+                  key={index}
+                  show={!!error}
+                  severity="warning"
+                  sx={{ mt: 4 }}
+                >
                   {error}
-                </Alert>
+                </AnimatedAlert>
               ))
             ) : (
-              <Alert severity="success">No semantic issues found.</Alert>
+              <AnimatedAlert show severity="success" sx={{ mt: 4 }}>
+                {t("no_semantic_issues")}
+              </AnimatedAlert>
             )}
           </Box>
           <Box>
-            <Typography variant="h6">Technical Issues</Typography>
+            <Typography variant="h6">{t("technical_issues")}</Typography>
             {technicalErrors.length > 0 ? (
               technicalErrors.map((error, index) => (
-                <Alert severity="error" key={index}>
+                <AnimatedAlert
+                  key={index}
+                  show={!!error}
+                  severity="error"
+                  sx={{ mt: 4 }}
+                >
                   {error}
-                </Alert>
+                </AnimatedAlert>
               ))
             ) : (
-              <Alert severity="success">No technical issues found.</Alert>
+              <AnimatedAlert show severity="success" sx={{ mt: 4 }}>
+                {t("no_technical_issues")}
+              </AnimatedAlert>
             )}
           </Box>
           <Box>
-            <Typography variant="h6">Warnings</Typography>
+            <Typography variant="h6">{t("technical_warnings")}</Typography>
             {technicalWarnings.length > 0 ? (
               technicalWarnings.map((warning, index) => (
-                <Alert severity="warning" key={index}>
+                <AnimatedAlert
+                  key={index}
+                  show={!!warning}
+                  severity="warning"
+                  sx={{ mt: 4 }}
+                >
                   {warning}
-                </Alert>
+                </AnimatedAlert>
               ))
             ) : (
-              <Alert severity="success">No technical warnings found.</Alert>
+              <AnimatedAlert show severity="success" sx={{ mt: 4 }}>
+                {t("no_technical_warnings")}
+              </AnimatedAlert>
             )}
           </Box>
           <Box>
-            <Typography variant="h6">Semantic Warnings</Typography>
+            <Typography variant="h6">{t("semantic_warnings")}</Typography>
             {semanticWarnings.length > 0 ? (
               semanticWarnings.map((warning, index) => (
-                <Alert severity="info" key={index}>
+                <AnimatedAlert
+                  key={index}
+                  show={!!warning}
+                  severity="info"
+                  sx={{ mt: 4 }}
+                >
                   {warning}
-                </Alert>
+                </AnimatedAlert>
               ))
             ) : (
-              <Alert severity="success">No semantic warnings found.</Alert>
+              <AnimatedAlert show severity="success" sx={{ mt: 4 }}>
+                {t("no_semantic_warnings")}
+              </AnimatedAlert>
             )}
           </Box>
         </Box>
       </Box>
-      <Box sx={{ mt: 3, display: "flex", justifyContent: "flex-end" }}>
-        <Button variant="contained" color="primary" type="submit">
-          Create
+      <Box sx={{ mt: 3, display: "flex", justifyContent: "space-between" }}>
+        <Button
+          variant="contained"
+          color="primary"
+          type="button"
+          disabled={loadingAnalysis || !content}
+          onClick={handleGptAnalyze}
+          startIcon={
+            loadingAnalysis ? (
+              <CircularProgress size={20} color="inherit" />
+            ) : (
+              <PsychologyIcon />
+            )
+          }
+          sx={{
+            "width": "120px",
+            "backgroundColor": "#3f51b5",
+            "&:disabled": {
+              backgroundColor: "#d3d3d3",
+              color: "#ffffff",
+            },
+          }}
+        >
+          {loadingAnalysis ? t("analyzing") : t("analyze")}
+        </Button>
+        <Button
+          variant="contained"
+          color="primary"
+          type="button"
+          disabled={formContentIsInValid}
+          onClick={(e) => {
+            e.preventDefault();
+            if (technicalWarnings.length > 0 || semanticWarnings.length > 0) {
+              setWarningModalOpen(true);
+            } else {
+              handleCreate();
+            }
+          }}
+        >
+          {t("create_button")}
         </Button>
       </Box>
+      {analysis && (
+        <AnimatedAlert show severity="info" sx={{ mt: 3 }}>
+          <Typography variant="h6">{t("ai_analysis")}</Typography>
+          <Typography>{analysis}</Typography>
+        </AnimatedAlert>
+      )}
       <Dialog open={warningModalOpen}>
-        <DialogTitle>Warning</DialogTitle>
+        <DialogTitle>{t("warnings_dialog_title")}</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Your haiku contains the following technical warnings:
+            {t("dialog_warning_text")}
             <ul>
               {technicalWarnings.map((warning, index) => (
                 <li key={index}>{warning}</li>
@@ -156,10 +214,10 @@ const TableMobile: React.FC<TableMobileProps> = ({
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setWarningModalOpen(false)} color="secondary">
-            Cancel
+            {t("cancel")}
           </Button>
           <Button onClick={handleWarningConfirm} color="primary">
-            Proceed
+            {t("proceed")}
           </Button>
         </DialogActions>
       </Dialog>

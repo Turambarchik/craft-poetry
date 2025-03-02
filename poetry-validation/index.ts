@@ -1,12 +1,9 @@
-import { PoetryForm } from "../helpers/constants";
+import { PoetryForm } from "../utils/constants";
 import { validateHaiku } from "./haiku/haiku";
 import { validateSonnet } from "./sonnet";
-import { ValidationResult } from "./types";
+import { PoetryValidator } from "./types";
 
-export const poetryValidators: Record<
-  PoetryForm,
-  (text: string) => Promise<ValidationResult>
-> = {
+export const poetryValidators: Record<PoetryForm, PoetryValidator> = {
   [PoetryForm.Haiku]: validateHaiku,
   [PoetryForm.Sonnet]: validateSonnet,
 };

@@ -1,4 +1,6 @@
-import { validateEnglishCharacters } from "../common/language";
+import { i18n as I18nType, TFunction } from "i18next";
+
+import { validateLanguageCharacters } from "../common/language";
 import { validateLineWordCount } from "../common/lineWordCount";
 import { validateLineCount } from "../common/structure";
 import { validateSyllables } from "../common/syllable";
@@ -12,6 +14,8 @@ import { validateNoRhymes } from "./noRhymes";
  */
 export const validateHaiku = async (
   text: string,
+  t: TFunction,
+  i18n: I18nType
 ): Promise<ValidationResult> => {
   const lines = text.split("\n").map((line) => line.trim());
 
@@ -20,19 +24,16 @@ export const validateHaiku = async (
   const technicalWarnings: string[] = [];
   const semanticWarnings: string[] = [];
 
-  // Technical validations
-  technicalErrors.push(...validateLineCount(lines, 3)); // Haiku must have exactly 3 lines
-  technicalErrors.push(...validateSyllables(lines, [5, 7, 5])); // Syllable pattern: 5-7-5
-  technicalErrors.push(...validateEnglishCharacters(text)); // Only English characters allowed
-  technicalErrors.push(...validateLineWordCount(lines, 10)); // Max words per line
+  technicalErrors.push(...validateLineCount(lines, 3, t));
+  technicalErrors.push(...validateSyllables(lines, [5, 7, 5], t));
+  technicalErrors.push(...validateLanguageCharacters(text, t, i18n));
+  technicalErrors.push(...validateLineWordCount(lines, 10, t));
 
-  // Additional technical warnings
-  const rhymeWarnings = await validateNoRhymes(lines);
+  const rhymeWarnings = await validateNoRhymes(lines, t);
   technicalWarnings.push(...rhymeWarnings);
 
-  // Example semantic validation (customize as needed)
   if (text.toLowerCase().includes("cliché")) {
-    semanticWarnings.push("Avoid clichés for a more original haiku.");
+    semanticWarnings.push(t("avoid_cliches"));
   }
 
   return {

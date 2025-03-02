@@ -1,0 +1,11 @@
+{
+  "library": "Library",
+  "table": "Table",
+  "drafts": "Drafts",
+  "language": "Language",
+  "poetryForm": "Poetry Form",
+  "english": "English",
+  "ukrainian": "Ukrainian",
+  "russian": "Russian",
+  "unknown": "Unknown"
+}

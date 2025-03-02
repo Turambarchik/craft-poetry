@@ -22,7 +22,7 @@ export type FormProps = {
 const Form: React.FC<{ form: FormProps }> = ({ form }) => {
   const authorName = form.author ? form.author.name : "Unknown author";
 
-  const handleClick = () => {
+  const handleClick = (e) => {
     Router.push(`/form/${form.id}`);
   };
 
@@ -30,8 +30,8 @@ const Form: React.FC<{ form: FormProps }> = ({ form }) => {
     <Card
       elevation={3}
       sx={{
-        marginBottom: 2,
-        cursor: "pointer",
+        "marginBottom": 2,
+        "cursor": "pointer",
         "&:hover": {
           boxShadow: 6,
         },

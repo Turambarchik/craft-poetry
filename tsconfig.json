@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "es6",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
@@ -15,43 +15,21 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
-    "types": [
-      "node"
-    ],
+    "types": ["node"],
     "allowSyntheticDefaultImports": true,
     "baseUrl": ".",
     "paths": {
-      "@/components/*": [
-        "components/*"
-      ],
-      "@/helpers/*": [
-        "helpers/*"
-      ],
-      "@/context/*": [
-        "context/*"
-      ],
-      "@/pages/*": [
-        "pages/*"
-      ],
-      "@/prisma/*": [
-        "prisma/*"
-      ],
-      "@/lib/*": [
-        "lib/*"
-      ],
-      "@/poetry-validation/*": [
-        "poetry-validation/*"
-      ],
-      "@/theme/*": [
-        "theme/*"
-      ]
+      "@/components/*": ["components/*"],
+      "@/helpers/*": ["utils/helpers/*"],
+      "@/context/*": ["context/*"],
+      "@/pages/*": ["pages/*"],
+      "@/prisma/*": ["prisma/*"],
+      "@/lib/*": ["lib/*"],
+      "@/poetry-validation/*": ["poetry-validation/*"],
+      "@/theme/*": ["theme/*"]
     }
   },
-  "exclude": [
-    "node_modules",
-    "**/*.test.ts",
-    "**/*.test.tsx"
-  ],
+  "exclude": ["node_modules", "**/*.test.ts", "**/*.test.tsx"],
   "include": [
     "global.d.ts",
     "next-env.d.ts",
@@ -60,6 +38,7 @@
     "**/*.tsx",
     "lint-staged.config.js",
     ".next/types/**/*.ts",
-    "./src/**/*.ts"
+    "./src/**/*.ts",
+    ".prettierrc.js"
   ]
 }

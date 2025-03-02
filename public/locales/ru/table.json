@@ -1,0 +1,23 @@
+{
+  "write_your": "Напишите ваше",
+  "analyze": "Анализировать",
+  "analyzing": "Анализирую...",
+  "semantic_warnings": "Семантические предупреждения",
+  "semantic_issues": "Семантические проблемы",
+  "technical_issues": "Технические проблемы",
+  "technical_warnings": "Технические предупреждения",
+  "no_semantic_warnings": "Семантических предупреждений не найдено.",
+  "no_semantic_issues": "Семантических проблем не найдено.",
+  "no_technical_issues": "Технических проблем не найдено.",
+  "no_technical_warnings": "Технических предупреждений не найдено.",
+  "ai_analysis": "AI-анализ:",
+  "warnings_dialog_title": "Предупреждения",
+  "dialog_warning_text": "Ваше хайку содержит следующие технические предупреждения:",
+  "proceed": "Продолжить",
+  "cancel": "Отмена",
+  "no_suggestions": "Нет предложений.",
+  "placeholder_content": "Напишите ваше хайку (3 строки, 5-7-5 слогов)...",
+  "title_label": "Заголовок",
+  "placeholder_title": "Введите заголовок вашего хайку",
+  "create_button": "Создать"
+}

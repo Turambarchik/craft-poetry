@@ -1,0 +1,23 @@
+{
+  "write_your": "Write your",
+  "analyze": "Analyze",
+  "analyzing": "Analyzing...",
+  "semantic_warnings": "Semantic Warnings",
+  "semantic_issues": "Semantic Issues",
+  "technical_issues": "Technical Issues",
+  "technical_warnings": "Technical Warnings",
+  "no_semantic_warnings": "No semantic warnings found.",
+  "no_semantic_issues": "No semantic issues found.",
+  "no_technical_issues": "No technical issues found.",
+  "no_technical_warnings": "No technical warnings found.",
+  "ai_analysis": "AI Analysis:",
+  "warnings_dialog_title": "Warnings",
+  "dialog_warning_text": "Your haiku contains the following technical warnings:",
+  "proceed": "Proceed",
+  "cancel": "Cancel",
+  "no_suggestions": "No suggestions provided.",
+  "placeholder_content": "Write your haiku here (3 lines, 5-7-5 syllables)...",
+  "title_label": "Title",
+  "placeholder_title": "Enter your haiku's title",
+  "create_button": "Create"
+}

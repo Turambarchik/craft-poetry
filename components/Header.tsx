@@ -1,30 +1,40 @@
+import LanguageIcon from "@mui/icons-material/Language";
 import { AppBar, Box, Button, Toolbar } from "@mui/material";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React from "react";
+import { useTranslation } from "next-i18next";
+import { PoetryForm, SUPPORTED_LANGS } from "utils/constants";
+import { transformLangCodeToDisplayName } from "utils/helpers/tranformLangCodeToDisplayName";
+import { Language } from "utils/types/globalTypes";
 
 import { useAppContext } from "@/context/appContext";
-import { PoetryForm } from "@/helpers/constants";
 
 import Dropdown from "./common/dropdown/dropdown";
 
 const Header: React.FC = () => {
   const router = useRouter();
   const { setSelectedForm } = useAppContext();
+  const { t, i18n } = useTranslation("common");
 
   const handleLanguageChange = (language: string) => {
-    localStorage.setItem("language", language);
-    console.log(`Language changed to: ${language}`);
+    const lang = language as Language;
+    if (SUPPORTED_LANGS.includes(lang)) {
+      i18n.changeLanguage(lang);
+      localStorage.setItem("language", lang);
+      router.push(router.pathname, router.asPath, { locale: lang });
+    } else {
+      console.error("Unsupported language", language);
+    }
   };
 
   const handlePoetryFormChange = (form: PoetryForm) => {
     setSelectedForm(form);
-    console.log(`Selected poetry form: ${form}`);
   };
 
   return (
-    <AppBar position="static" color="primary">
+    <AppBar position="static" color="primary" sx={{ padding: 1 }}>
       <Toolbar
+        variant="dense"
         sx={{
           display: "flex",
           justifyContent: "space-between",
@@ -32,7 +42,8 @@ const Header: React.FC = () => {
         }}
       >
         <Box sx={{ display: "flex", gap: 2 }}>
-          {["/", "/table", "/drafts"].map((path) => (
+          {/* "/library", */}
+          {["/", "/drafts"].map((path) => (
             <Button
               key={path}
               component={Link}
@@ -46,26 +57,29 @@ const Header: React.FC = () => {
                       borderRadius: "8px",
                     }
                   : {}),
-                "&:hover": {
-                  backgroundColor: "rgba(255, 255, 255, 0.1)",
-                },
+                "&:hover": { backgroundColor: "rgba(255, 255, 255, 0.1)" },
               }}
             >
-              {path === "/"
-                ? "Library"
-                : path.slice(1).charAt(0).toUpperCase() + path.slice(2)}
+              {t(path.slice(1) || "table")}
             </Button>
           ))}
         </Box>
+
         <Box sx={{ display: "flex", gap: 2 }}>
           <Dropdown
-            title="Language"
-            items={["en", "es", "fr", "de"]}
+            title={<LanguageIcon />}
+            items={SUPPORTED_LANGS.map((langCode) => ({
+              value: langCode,
+              label: transformLangCodeToDisplayName(langCode, t),
+            }))}
             onSelect={handleLanguageChange}
           />
           <Dropdown
-            title="Poetry Form"
-            items={Object.values(PoetryForm)}
+            title={t("poetryForm")}
+            items={Object.values(PoetryForm).map((name) => ({
+              value: name,
+              label: name,
+            }))}
             onSelect={(form) => handlePoetryFormChange(form as PoetryForm)}
           />
         </Box>

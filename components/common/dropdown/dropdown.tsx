@@ -1,9 +1,14 @@
 import { Button, Menu, MenuItem } from "@mui/material";
 import React, { useState } from "react";
 
+interface DropdownItem {
+  value: string;
+  label: string;
+}
+
 interface DropdownProps {
-  title: string;
-  items: string[];
+  title: string | React.ReactNode;
+  items: DropdownItem[];
   onSelect: (value: string) => void;
 }
 
@@ -38,8 +43,8 @@ const Dropdown: React.FC<DropdownProps> = ({ title, items, onSelect }) => {
       </Button>
       <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose}>
         {items.map((item) => (
-          <MenuItem key={item} onClick={() => handleSelect(item)}>
-            {item}
+          <MenuItem key={item.value} onClick={() => handleSelect(item.value)}>
+            {item.label}
           </MenuItem>
         ))}
       </Menu>

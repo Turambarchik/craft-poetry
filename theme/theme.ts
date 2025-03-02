@@ -28,8 +28,8 @@ const theme = createTheme({
       styleOverrides: {
         root: { padding: "10px 20px" },
         containedPrimary: {
-          backgroundColor: "#3f51b5",
-          color: "#ffffff",
+          "backgroundColor": "#3f51b5",
+          "color": "#ffffff",
           "&:hover": { backgroundColor: "#2c387e" },
         },
       },

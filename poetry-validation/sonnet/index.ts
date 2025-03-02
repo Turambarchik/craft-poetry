@@ -6,7 +6,7 @@ import { ValidationResult } from "../types";
  * @returns A promise resolving to an object with validity status, errors, and warnings.
  */
 export const validateSonnet = async (
-  text: string,
+  text: string
 ): Promise<ValidationResult> => {
   const technicalErrors: string[] = [];
   const semanticErrors: string[] = [];

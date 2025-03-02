@@ -1,0 +1,23 @@
+{
+  "write_your": "Напишіть вашу",
+  "analyze": "Аналізувати",
+  "analyzing": "Аналізую...",
+  "semantic_warnings": "Семантичні застереження",
+  "semantic_issues": "Семантичні проблеми",
+  "technical_issues": "Технічні проблеми",
+  "technical_warnings": "Технічні застереження",
+  "no_semantic_warnings": "Семантичних застережень не виявлено.",
+  "no_semantic_issues": "Семантичних проблем не виявлено.",
+  "no_technical_issues": "Технічних проблем не виявлено.",
+  "no_technical_warnings": "Технічних застережень не виявлено.",
+  "ai_analysis": "Аналіз AI:",
+  "warnings_dialog_title": "Застереження",
+  "dialog_warning_text": "Ваш хайку містить такі технічні застереження:",
+  "proceed": "Продовжити",
+  "cancel": "Скасувати",
+  "no_suggestions": "Немає пропозицій.",
+  "placeholder_content": "Напишіть ваш хайку (3 рядки, 5-7-5 складів)...",
+  "title_label": "Заголовок",
+  "placeholder_title": "Введіть заголовок вашого хайку",
+  "create_button": "Створити"
+}
